@@ -27,11 +27,9 @@
 
     <section class="hero">
 
-      <img
-        src="images/hero.jpg"
-        alt="Vardaan carrying a lantern"
-        class="hero-image"
-      >
+      <video class="hero-image" autoplay muted loop playsinline>
+  <source src="images/vardaan-hero.mp4" type="video/mp4">
+</video>
 
       <div class="hero-overlay"></div>
 
@@ -57,10 +55,32 @@
       <div class="hero-credit">
         The strength within
       </div>
+      <audio id="heroAudio" loop preload="auto">
+  <source src="images/vardaan-ambient.mp3" type="audio/mpeg">
+</audio>
+
+<button id="soundToggle" class="sound-toggle">Sound Off</button>
+      
+    
 
     </section>
 
   </main>
+<script>
+  const audio = document.getElementById("heroAudio");
+  const soundButton = document.getElementById("soundToggle");
 
+  audio.volume = 0.10;
+
+  soundButton.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      soundButton.textContent = "Sound On";
+    } else {
+      audio.pause();
+      soundButton.textContent = "Sound Off";
+    }
+  });
+</script>
 </body>
 </html>

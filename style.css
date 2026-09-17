@@ -367,7 +367,27 @@ a {
 .hero-content h1 {
   color: #f1eee7 !important;
 }
+.sound-toggle {
+  position: absolute;
+  bottom: 28px;
+  left: 28px;
+  z-index: 10;
+  padding: 9px 16px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(255, 190, 80, 0.45);
+  color: #f4d49a;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: 0.3s ease;
+}
 
+.sound-toggle:hover {
+  background: rgba(255, 190, 80, 0.12);
+  border-color: rgba(255, 190, 80, 0.8);
+}
 /* =========================
    ORIGIN PAGE
 ========================= */
@@ -2102,4 +2122,192 @@ body {
 
 .connection-arrow {
   font-size: 17px;
+}
+
+/* Subtle spooky movement */
+.hero-image {
+  animation: spookyShake 8s infinite;
+  transform-origin: center center;
+}
+
+@keyframes spookyShake {
+  0%, 100% {
+    transform: scale(1.02) translate(0, 0);
+  }
+
+  25% {
+    transform: scale(1.025) translate(-1px, 1px);
+  }
+
+  50% {
+    transform: scale(1.03) translate(1px, -1px);
+  }
+
+  75% {
+    transform: scale(1.025) translate(-1px, 0);
+  }
+}
+/* Cinematic spooky fog */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(
+      ellipse at 20% 70%,
+      rgba(220, 220, 220, 0.10),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 80% 40%,
+      rgba(180, 180, 180, 0.07),
+      transparent 50%
+    );
+  filter: blur(30px);
+  opacity: 0.7;
+  animation: fogDrift 12s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 2;
+}
+
+@keyframes fogDrift {
+  from {
+    transform: translateX(-3%) scale(1);
+  }
+
+  to {
+    transform: translateX(3%) scale(1.08);
+  }
+}
+/* =========================================
+   VARDAAN — SPOOKY CINEMATIC ATMOSPHERE
+   ========================================= */
+
+/* 3 + 4 — subtle light flicker */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    circle at 50% 55%,
+    rgba(255, 190, 80, 0.08),
+    transparent 45%
+  );
+  animation: lanternFlicker 4s infinite;
+}
+
+@keyframes lanternFlicker {
+  0%, 100% {
+    opacity: 0.7;
+  }
+
+  8% {
+    opacity: 0.9;
+  }
+
+  12% {
+    opacity: 0.55;
+  }
+
+  18% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 0.72;
+  }
+
+  72% {
+    opacity: 0.85;
+  }
+
+  78% {
+    opacity: 0.62;
+  }
+}
+
+
+/* 5 — floating dust / ash particles */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.18) 1px, transparent 2px),
+    radial-gradient(circle, rgba(255,255,255,0.12) 1px, transparent 2px),
+    radial-gradient(circle, rgba(255,220,160,0.14) 1px, transparent 2px);
+
+  background-size:
+    170px 190px,
+    230px 260px,
+    310px 340px;
+
+  animation: particlesDrift 18s linear infinite;
+  opacity: 0.35;
+}
+
+@keyframes particlesDrift {
+  from {
+    background-position:
+      0 0,
+      40px 20px,
+      -30px 40px;
+  }
+
+  to {
+    background-position:
+      80px -180px,
+      -60px -240px,
+      100px -300px;
+  }
+}
+
+
+/* 8 — rare cinematic darkness flicker */
+.hero {
+  animation: cinematicFlicker 18s infinite;
+}
+
+@keyframes cinematicFlicker {
+  0%, 96%, 100% {
+    filter: brightness(1);
+  }
+
+  96.5% {
+    filter: brightness(0.82);
+  }
+
+  97% {
+    filter: brightness(1);
+  }
+
+  97.4% {
+    filter: brightness(0.9);
+  }
+
+  98% {
+    filter: brightness(1);
+  }
+}
+
+
+/* 9 — very slow breathing camera movement */
+.hero-image {
+  animation: breathingZoom 18s ease-in-out infinite;
+  transform-origin: center center;
+}
+
+@keyframes breathingZoom {
+  0%, 100% {
+    transform: scale(1.02);
+  }
+
+  50% {
+    transform: scale(1.045);
+  }
 }
