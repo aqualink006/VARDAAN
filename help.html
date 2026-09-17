@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Vardaan — Ask for Help</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+
+    /* ================================
+       HELP PAGE FINAL FIX
+    ================================= */
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background: #080909 !important;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .help-page {
+      min-height: calc(100vh - 80px) !important;
+      height: auto !important;
+      background: #080909 !important;
+      overflow: visible !important;
+    }
+
+    .help-hero {
+      min-height: calc(100vh - 80px);
+      height: auto;
+      box-sizing: border-box;
+      padding: 42px 8vw 55px;
+    }
+
+    .signal-form {
+      gap: 9px;
+    }
+
+    .signal-field {
+      min-height: 64px;
+    }
+
+    .message-field {
+      min-height: 90px;
+    }
+
+    /* ================================
+       VERIFICATION
+    ================================= */
+
+    .verification-area {
+      display: none;
+      width: 100%;
+      margin-top: 10px;
+      box-sizing: border-box;
+    }
+
+    .verification-area .signal-field {
+      margin-bottom: 9px;
+    }
+
+    .verification-area .signal-button {
+      margin-top: 0;
+    }
+
+    #verificationStatus {
+      margin-top: 9px;
+      padding-left: 3px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 8px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .verification-pending {
+      color: #777771;
+    }
+
+    .verification-success {
+      color: #e4a04a;
+    }
+
+    .verification-failed {
+      color: #ff6b5f;
+    }
+
+    /* ================================
+       MESSAGE — HIDDEN UNTIL VERIFIED
+    ================================= */
+
+    .message-section {
+      display: none;
+    }
+
+    /* ================================
+       FINAL SEND BUTTON
+    ================================= */
+
+    #sendMessageButton {
+      margin-top: 9px;
+    }
+
+    #sendMessageButton:disabled {
+      opacity: 0.28;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    /* ================================
+       CHAT CONNECTION BUTTON
+    ================================= */
+
+    .chat-form-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      width: 100%;
+      box-sizing: border-box;
+
+      margin-top: 14px;
+      padding: 14px 16px;
+
+      border: 1px solid #e4a04a;
+      background: #e4a04a;
+
+      color: #111;
+
+      font-family: "JetBrains Mono", monospace;
+      font-size: 8px;
+      letter-spacing: 1.8px;
+
+      text-decoration: none;
+      text-transform: uppercase;
+
+      transition: 0.3s ease;
+    }
+
+    .chat-form-link:hover {
+      background: #f1b45d;
+      border-color: #f1b45d;
+      box-shadow: 0 0 25px rgba(228,160,74,0.2);
+    }
+
+    .connection-arrow {
+      font-size: 17px;
+    }
+
+    /* ================================
+       CHAT SCROLL
+    ================================= */
+
+    .simple-chat-messages {
+      height: 300px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    /* ================================
+       MOBILE
+    ================================= */
+
+    @media (max-width: 700px) {
+
+      .help-hero {
+        display: block;
+        min-height: 100vh;
+        padding: 105px 7vw 45px;
+      }
+
+      .help-contact {
+        margin-top: 45px;
+        padding-left: 20px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- ================================
+       NAVBAR
+  ================================= -->
+
+  <header class="navbar">
+
+    <a href="index.html" class="logo">
+      VARDAAN
+    </a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="origin.html">Origin</a>
+      <a href="powers.html">Powers</a>
+      <a href="help.html">Ask for help</a>
+    </nav>
+
+  </header>
+
+
+  <!-- ================================
+       HELP PAGE
+  ================================= -->
+
+  <main class="help-page">
+
+    <section class="help-hero">
+
+
+      <!-- LEFT SIDE -->
+
+      <div class="help-intro">
+
+        <p class="help-kicker">
+          03 — Reach out
+        </p>
+
+        <h1>
+          YOU DON'T<br>
+          HAVE TO<br>
+          FACE IT<br>
+          ALONE.
+        </h1>
+
+        <p class="help-description">
+          Every signal deserves to be heard.
+          Tell Vardaan what is happening and
+          let the light find its way to you.
+        </p>
+
+        <div class="help-signal">
+          <span class="signal-dot"></span>
+          <span>Vardaan is listening</span>
+        </div>
+
+      </div>
+
+
+      <!-- RIGHT SIDE -->
+
+      <div class="help-contact">
+
+
+        <div class="contact-top">
+
+          <span class="contact-number">
+            03
+          </span>
+
+          <span class="contact-status">
+            SIGNAL CHANNEL
+          </span>
+
+        </div>
+
+
+        <div class="contact-title">
+
+          <span class="contact-line"></span>
+
+          <h2>
+            OPEN A<br>
+            CONNECTION
+          </h2>
+
+        </div>
+
+
+        <p class="contact-intro">
+          Verify your email first.
+          Your message can only be sent after verification.
+        </p>
+
+
+        <!-- =================================
+             MAIN FORM
+        ================================= -->
+
+        <form
+          class="signal-form"
+          id="emailForm"
+          novalidate
+        >
+
+
+          <!-- NAME -->
+
+          <div class="signal-field">
+
+            <span class="field-number">
+              01
+            </span>
+
+            <div class="field-content">
+
+              <label for="name">
+                Your name
+              </label>
+
+              <input
+                id="name"
+                type="text"
+                placeholder="Enter your name"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- EMAIL -->
+
+          <div class="signal-field">
+
+            <span class="field-number">
+              02
+            </span>
+
+            <div class="field-content">
+
+              <label for="email">
+                Your email
+              </label>
+
+              <input
+                id="email"
+                type="email"
+                placeholder="Where can Vardaan reach you?"
+                required
+              >
+
+            </div>
+
+          </div>
+
+
+          <!-- VERIFY EMAIL -->
+
+          <button
+            type="button"
+            class="signal-button"
+            id="sendCodeButton"
+          >
+
+            <span>
+              Verify your email
+            </span>
+
+            <span class="button-arrow">
+              →
+            </span>
+
+          </button>
+
+
+          <!-- =================================
+               VERIFICATION AREA
+               APPEARS AFTER CODE IS SENT
+          ================================= -->
+
+          <div
+            class="verification-area"
+            id="verificationBox"
+          >
+
+
+            <div class="signal-field">
+
+              <span class="field-number">
+                03
+              </span>
+
+              <div class="field-content">
+
+                <label for="verificationCode">
+                  Verification code
+                </label>
+
+                <input
+                  id="verificationCode"
+                  type="text"
+                  inputmode="numeric"
+                  maxlength="6"
+                  placeholder="Enter the 6-digit code"
+                  autocomplete="one-time-code"
+                >
+
+              </div>
+
+            </div>
+
+
+            <button
+              type="button"
+              class="signal-button"
+              id="verifyButton"
+            >
+
+              <span>
+                Confirm email
+              </span>
+
+              <span class="button-arrow">
+                →
+              </span>
+
+            </button>
+
+
+            <div
+              id="verificationStatus"
+            ></div>
+
+
+          </div>
+
+
+          <!-- =================================
+               MESSAGE
+               ONLY APPEARS AFTER VERIFICATION
+          ================================= -->
+
+          <div
+            class="message-section"
+            id="messageSection"
+          >
+
+            <div class="signal-field message-field">
+
+              <span class="field-number">
+                04
+              </span>
+
+              <div class="field-content">
+
+                <label for="message">
+                  Your message
+                </label>
+
+                <textarea
+                  id="message"
+                  placeholder="Tell Vardaan what you need help with..."
+                ></textarea>
+
+              </div>
+
+            </div>
+
+
+            <!-- SEND MESSAGE -->
+
+            <button
+              type="button"
+              class="signal-button"
+              id="sendMessageButton"
+            >
+
+              <span>
+                Send your signal
+              </span>
+
+              <span class="button-arrow">
+                →
+              </span>
+
+            </button>
+
+          </div>
+
+
+        </form>
+
+
+        <div class="contact-footer">
+
+          <span>
+            CONFIDENTIAL CHANNEL
+          </span>
+
+          <span>
+            V • 03
+          </span>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =================================
+       CHATBOT
+  ================================= -->
+
+  <details class="vardaan-chat-simple">
+
+    <summary>
+      <span>✦</span>
+      Talk to Vardaan
+    </summary>
+
+
+    <div class="simple-chat">
+
+
+      <div class="simple-chat-header">
+
+        <small>
+          DIRECT CONNECTION
+        </small>
+
+        <h2>
+          Vardaan
+        </h2>
+
+      </div>
+
+
+      <div class="simple-chat-messages">
+
+        <div class="simple-vardaan">
+
+          <small>
+            VARDAAN
+          </small>
+
+          <p>
+            Hello. I'm Vardaan. I'm listening.
+            What is happening?
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <form
+        class="simple-chat-form"
+        id="simpleChatForm"
+      >
+
+        <input
+          type="text"
+          id="simpleChatInput"
+          placeholder="Talk to Vardaan..."
+          autocomplete="off"
+          required
+        >
+
+        <button type="submit">
+          →
+        </button>
+
+      </form>
+
+
+    </div>
+
+  </details>
+
+
+  <!-- =================================
+       JAVASCRIPT
+  ================================= -->
+
+  <script>
+
+
+    /* =================================
+       VERIFICATION VARIABLES
+    ================================= */
+
+    const sendCodeButton =
+      document.getElementById("sendCodeButton");
+
+    const verificationBox =
+      document.getElementById("verificationBox");
+
+    const verificationCode =
+      document.getElementById("verificationCode");
+
+    const verifyButton =
+      document.getElementById("verifyButton");
+
+    const verificationStatus =
+      document.getElementById("verificationStatus");
+
+    const messageSection =
+      document.getElementById("messageSection");
+
+    const sendMessageButton =
+      document.getElementById("sendMessageButton");
+
+
+    let emailVerified = false;
+
+    let codeSent = false;
+
+
+    /* =================================
+       SEND VERIFICATION CODE
+    ================================= */
+
+    sendCodeButton.addEventListener(
+      "click",
+      async function() {
+
+
+        const name =
+          document.getElementById("name").value.trim();
+
+        const email =
+          document.getElementById("email").value.trim();
+
+
+        if (!name) {
+
+          alert("Please enter your name.");
+
+          return;
+
+        }
+
+
+        if (!email) {
+
+          alert("Please enter your email address.");
+
+          return;
+
+        }
+
+
+        if (!email.includes("@")) {
+
+          alert("Please enter a valid email address.");
+
+          return;
+
+        }
+
+
+        sendCodeButton.disabled = true;
+
+        sendCodeButton.querySelector("span").textContent =
+          "Sending code...";
+
+
+        try {
+
+
+          const response = await fetch(
+            "http://localhost:3000/api/send-code",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json"
+              },
+
+              body: JSON.stringify({
+                email: email
+              })
+            }
+          );
+
+
+          const data =
+            await response.json();
+
+
+          if (!data.success) {
+
+            alert(data.message);
+
+            sendCodeButton.disabled = false;
+
+            sendCodeButton.querySelector("span").textContent =
+              "Verify your email";
+
+            return;
+
+          }
+
+
+          /* CODE SENT */
+
+          codeSent = true;
+
+          emailVerified = false;
+
+
+          verificationBox.style.display =
+            "block";
+
+
+          verificationStatus.textContent =
+            "CODE SENT — CHECK YOUR EMAIL";
+
+
+          verificationStatus.className =
+            "verification-pending";
+
+
+          sendCodeButton.querySelector("span").textContent =
+            "Code sent ✓";
+
+
+          verificationCode.focus();
+
+
+          alert(
+            "Verification code sent to your email."
+          );
+
+
+        } catch (error) {
+
+
+          console.error(error);
+
+
+          alert(
+            "Unable to send the verification code. Make sure the Vardaan backend is running."
+          );
+
+
+          sendCodeButton.querySelector("span").textContent =
+            "Verify your email";
+
+        }
+
+
+        sendCodeButton.disabled = false;
+
+      }
+    );
+
+
+    /* =================================
+       ENTER KEY = VERIFY CODE
+    ================================= */
+
+    verificationCode.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (event.key === "Enter") {
+
+          event.preventDefault();
+
+          verifyButton.click();
+
+        }
+
+      }
+    );
+
+
+    /* =================================
+       VERIFY CODE
+    ================================= */
+
+    verifyButton.addEventListener(
+      "click",
+      async function() {
+
+
+        if (!codeSent) {
+
+          alert(
+            "Please request a verification code first."
+          );
+
+          return;
+
+        }
+
+
+        const email =
+          document.getElementById("email").value.trim();
+
+        const code =
+          verificationCode.value.trim();
+
+
+        if (code.length !== 6) {
+
+          verificationStatus.textContent =
+            "VERIFICATION FAILED ✕";
+
+          verificationStatus.className =
+            "verification-failed";
+
+          return;
+
+        }
+
+
+        verifyButton.disabled = true;
+
+        verifyButton.querySelector("span").textContent =
+          "Checking...";
+
+
+        try {
+
+
+          const response = await fetch(
+            "http://localhost:3000/api/verify-code",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json"
+              },
+
+              body: JSON.stringify({
+                email: email,
+                code: code
+              })
+            }
+          );
+
+
+          const data =
+            await response.json();
+
+
+          if (data.success) {
+
+
+            /* =========================
+               VERIFIED
+            ========================= */
+
+            emailVerified = true;
+
+
+            verificationStatus.textContent =
+              "EMAIL VERIFIED ✓";
+
+
+            verificationStatus.className =
+              "verification-success";
+
+
+            verifyButton.querySelector("span").textContent =
+              "EMAIL VERIFIED ✓";
+
+
+            /* SHOW MESSAGE AREA */
+
+            messageSection.style.display =
+              "block";
+
+
+            alert(
+              "EMAIL VERIFIED ✓\n\nYou can now enter your message."
+            );
+
+
+            /* SCROLL TO MESSAGE */
+
+            setTimeout(function() {
+
+              document.getElementById("message").focus();
+
+            }, 200);
+
+
+          } else {
+
+
+            /* =========================
+               FAILED
+            ========================= */
+
+            emailVerified = false;
+
+
+            verificationStatus.textContent =
+              "VERIFICATION FAILED ✕";
+
+
+            verificationStatus.className =
+              "verification-failed";
+
+
+            verifyButton.querySelector("span").textContent =
+              "Confirm email";
+
+
+            messageSection.style.display =
+              "none";
+
+
+            alert(
+              "VERIFICATION FAILED ✕\n\n" +
+              data.message
+            );
+
+          }
+
+
+        } catch (error) {
+
+
+          console.error(error);
+
+
+          emailVerified = false;
+
+
+          verificationStatus.textContent =
+            "VERIFICATION FAILED ✕";
+
+
+          verificationStatus.className =
+            "verification-failed";
+
+
+          verifyButton.querySelector("span").textContent =
+            "Confirm email";
+
+
+          messageSection.style.display =
+            "none";
+
+
+          alert(
+            "Unable to verify the email. Make sure the Vardaan backend is running."
+          );
+
+        }
+
+
+        verifyButton.disabled = false;
+
+      }
+    );
+
+
+    /* =================================
+       SEND MESSAGE
+    ================================= */
+
+    sendMessageButton.addEventListener(
+      "click",
+      async function() {
+
+
+        /* NEVER SEND WITHOUT VERIFICATION */
+
+        if (!emailVerified) {
+
+          alert(
+            "VERIFICATION FAILED ✕\n\nPlease verify your email before sending your message."
+          );
+
+          return;
+
+        }
+
+
+        const name =
+          document.getElementById("name").value.trim();
+
+        const email =
+          document.getElementById("email").value.trim();
+
+        const message =
+          document.getElementById("message").value.trim();
+
+
+        if (!message) {
+
+          alert(
+            "Please enter your message."
+          );
+
+          return;
+
+        }
+
+
+        sendMessageButton.disabled = true;
+
+        sendMessageButton.querySelector("span").textContent =
+          "Sending...";
+
+
+        try {
+
+
+          const response = await fetch(
+            "http://localhost:3000/api/contact",
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type": "application/json"
+              },
+
+              body: JSON.stringify({
+                name: name,
+                email: email,
+                message: message
+              })
+            }
+          );
+
+
+          const data =
+            await response.json();
+
+
+          if (data.success) {
+
+
+            alert(
+              "MESSAGE SENT ✓\n\nYour signal has been sent to Vardaan."
+            );
+
+
+            document.getElementById("name").value = "";
+
+            document.getElementById("email").value = "";
+
+            document.getElementById("message").value = "";
+
+            verificationCode.value = "";
+
+
+            verificationBox.style.display =
+              "none";
+
+
+            messageSection.style.display =
+              "none";
+
+
+            verificationStatus.textContent =
+              "";
+
+
+            emailVerified = false;
+
+            codeSent = false;
+
+
+            sendCodeButton.querySelector("span").textContent =
+              "Verify your email";
+
+
+            verifyButton.querySelector("span").textContent =
+              "Confirm email";
+
+
+          } else {
+
+
+            alert(data.message);
+
+          }
+
+
+        } catch (error) {
+
+
+          console.error(error);
+
+
+          alert(
+            "Unable to send your message. Make sure the Vardaan backend is running."
+          );
+
+        }
+
+
+        sendMessageButton.disabled = false;
+
+      }
+    );
+
+
+    /* =================================
+       CHATBOT
+    ================================= */
+
+    const simpleChatForm =
+      document.getElementById("simpleChatForm");
+
+    const simpleChatInput =
+      document.getElementById("simpleChatInput");
+
+    const simpleChatMessages =
+      document.querySelector(".simple-chat-messages");
+
+
+    simpleChatForm.addEventListener(
+      "submit",
+      function(event) {
+
+        event.preventDefault();
+
+
+        const text =
+          simpleChatInput.value.trim();
+
+
+        if (!text) return;
+
+
+        /* USER MESSAGE */
+
+        const you =
+          document.createElement("div");
+
+        you.className =
+          "simple-vardaan";
+
+
+        you.innerHTML = `
+          <small>YOU</small>
+          <p></p>
+        `;
+
+
+        you.querySelector("p").textContent =
+          text;
+
+
+        simpleChatMessages.appendChild(you);
+
+
+        /* CLEAR INPUT */
+
+        simpleChatInput.value = "";
+
+
+        const lower =
+          text.toLowerCase();
+
+
+        let reply =
+          "I'm listening. Tell me a little more about what is happening.";
+
+
+        if (
+          lower.includes("hello") ||
+          lower.includes("hi") ||
+          lower.includes("hey")
+        ) {
+
+          reply =
+            "Hello. I'm Vardaan. I'm listening. What is happening?";
+
+        }
+
+        else if (
+          lower.includes("sad") ||
+          lower.includes("upset")
+        ) {
+
+          reply =
+            "You don't have to hide how you feel. Take a breath and tell me what is making today difficult.";
+
+        }
+
+        else if (
+          lower.includes("scared") ||
+          lower.includes("afraid") ||
+          lower.includes("fear")
+        ) {
+
+          reply =
+            "Fear can feel overwhelming. Take one slow breath and tell me what is frightening you.";
+
+        }
+
+        else if (
+          lower.includes("alone") ||
+          lower.includes("lonely")
+        ) {
+
+          reply =
+            "You don't have to carry everything silently. Is there someone you trust that you can talk to?";
+
+        }
+
+        else if (
+          lower.includes("help") ||
+          lower.includes("problem") ||
+          lower.includes("trouble")
+        ) {
+
+          reply =
+            "I'm listening. You don't need perfect words. Tell me what is happening, one step at a time.";
+
+        }
+
+
+        setTimeout(function() {
+
+
+          const vardaan =
+            document.createElement("div");
+
+
+          vardaan.className =
+            "simple-vardaan";
+
+
+          vardaan.innerHTML = `
+            <small>VARDAAN</small>
+            <p></p>
+          `;
+
+
+          vardaan.querySelector("p").textContent =
+            reply;
+
+
+          simpleChatMessages.appendChild(vardaan);
+
+
+          /* FOLLOW UP */
+
+          const followUp =
+            document.createElement("div");
+
+
+          followUp.className =
+            "simple-vardaan";
+
+
+          followUp.innerHTML = `
+            <small>VARDAAN</small>
+
+            <p>
+              If you'd like me to follow up with you,
+              you can share your name, email, and message
+              through the connection form below.
+            </p>
+
+            <a
+              href="#emailForm"
+              class="chat-form-link open-connection"
+            >
+              <span>OPEN CONNECTION</span>
+              <span class="connection-arrow">→</span>
+            </a>
+          `;
+
+
+          simpleChatMessages.appendChild(followUp);
+
+
+          simpleChatMessages.scrollTop =
+            simpleChatMessages.scrollHeight;
+
+
+        }, 300);
+
+
+        simpleChatMessages.scrollTop =
+          simpleChatMessages.scrollHeight;
+
+      }
+    );
+
+
+    /* =================================
+       OPEN CONNECTION
+    ================================= */
+
+    document.addEventListener(
+      "click",
+      function(event) {
+
+
+        const link =
+          event.target.closest(".open-connection");
+
+
+        if (!link) return;
+
+
+        event.preventDefault();
+
+
+        const chat =
+          link.closest(".vardaan-chat-simple");
+
+
+        if (chat) {
+
+          chat.open = false;
+
+        }
+
+
+        setTimeout(function() {
+
+
+          const form =
+            document.getElementById("emailForm");
+
+
+          if (form) {
+
+            form.scrollIntoView({
+              behavior: "smooth",
+              block: "center"
+            });
+
+          }
+
+
+        }, 150);
+
+      }
+    );
+
+
+  </script>
+
+
+</body>
+
+</html>
